@@ -8,6 +8,10 @@
  - 利用闭包解决常见的作用域问题
 
 
+ 注意: 闭包记住的是变量的引用(reference)，而不是闭包创建时刻该变量的值。
+
+      这就是循环的时候拿到的 i 都是 循环结束的值
+
 
 ## 闭包是如何工作的
 
@@ -114,3 +118,31 @@
 
   var value = isPrime.primes && isPrime.primes[5] ? isPrime.primes[5] : isPrime.memoized(5)
 ```
+
+
+### 函数包装
+
+  > 函数包装是一种封装函数的逻辑的技巧，用于在单个步骤内重载创建新函数或继承函数。最有价值的场景是，在重载一些已经存在的函数时，同事保持原始函数在被包装之后仍能有效使用。
+
+  ```
+    var  Persion = {
+      name: '好人',
+      sayName: function () {
+        return '呵呵'
+      }
+    }
+
+
+    function warp (object, method, warpper) {
+
+      var fn = object[method];
+
+      return object[method] = function () {
+        return warpper.apply(this, [fn.apply(this)].concat(Array.prototype.slice.apply(Array, arguments)))
+      }
+    }
+
+    warp(Persion, 'sayName', function (fn) {
+      return Persion.name == '好人' ? '我是个好人' : fn()
+    })
+  ```

@@ -84,30 +84,54 @@
 
 // 利用闭包实现，方便调用
 
-Function.prototype.memoized = function (value) {
-  this.primes = this.primes || {}
-  console.log(this.primes);
-  return this.primes[value] !== undefined ? this.primes[value] : this.primes[value] = this.apply(this, arguments)
-}
+// Function.prototype.memoized = function (value) {
+//   this.primes = this.primes || {}
+//   console.log(this.primes);
+//   return this.primes[value] !== undefined ? this.primes[value] : this.primes[value] = this.apply(this, arguments)
+// }
+//
+// Function.prototype.memoize =function () {
+//   var fn = this
+//   return function () {
+//     return fn.memoized.apply(fn, arguments)
+//   }
+// }
+//
+// var isPrime = (function  (num) {
+//
+//   if (num === 1 || num === 0) return;
+//
+//   var flag = true;
+//
+//   for (var i = 2; i < num; i++) {
+//     if (num % i == 0) {
+//       flag = false;
+//       break;
+//     }
+//   }
+//   return flag
+// }).memoize()
 
-Function.prototype.memoize =function () {
-  var fn = this
-  return function () {
-    return fn.memoized.apply(fn, arguments)
-  }
-}
 
-var isPrime = (function  (num) {
+// 函数包装
 
-  if (num === 1 || num === 0) return;
-
-  var flag = true;
-
-  for (var i = 2; i < num; i++) {
-    if (num % i == 0) {
-      flag = false;
-      break;
-    }
-  }
-  return flag
-}).memoize()
+// var  Persion = {
+//   name: '好人',
+//   sayName: function () {
+//     return '呵呵'
+//   }
+// }
+//
+//
+// function warp (object, method, warpper) {
+//
+//   var fn = object[method];
+//
+//   return object[method] = function () {
+//     return warpper.apply(this, [fn.apply(this)].concat(Array.prototype.slice.apply(Array, arguments)))
+//   }
+// }
+//
+// warp(Persion, 'sayName', function (fn) {
+//   return Persion.name == '好人' ? '我是个好人' : fn()
+// })

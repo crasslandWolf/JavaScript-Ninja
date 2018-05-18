@@ -1,1 +1,1 @@
-# 学习 JavaScript Ninja 
+# 学习 JavaScript Ninja
